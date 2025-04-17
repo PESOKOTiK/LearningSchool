@@ -1,0 +1,84 @@
+﻿@page
+@model LearningSchool.Pages.DashboardModel
+@{
+    var role = Model.Role;
+}
+
+<h2>Welcome, @role!</h2>
+
+@if (role == "Student")
+{
+    <h3>Available Courses</h3>
+    <ul>
+        @foreach (var course in Model.AvailableCourses)
+        {
+            <li>@course</li>
+        }
+    </ul>
+
+    <h3>Your Enrolled Courses</h3>
+    <ul>
+        @foreach (var course in Model.EnrolledCourses)
+        {
+            <li>@course</li>
+        }
+    </ul>
+
+    <h3>Your Assignments</h3>
+    <ul>
+        @foreach (var assignment in Model.StudentAssignments)
+        {
+            <li>@assignment</li>
+        }
+    </ul>
+}
+else if (role == "Teacher")
+{
+    <h3>Your Courses</h3>
+    <ul>
+        @foreach (var course in Model.TeacherCourses)
+        {
+            <li>@course</li>
+        }
+    </ul>
+
+    <h3>Student Enrollments</h3>
+    <ul>
+        @foreach (var enrollment in Model.EnrolledStudents)
+        {
+            <li>@enrollment</li>
+        }
+    </ul>
+
+    <h3>Assignment Submissions</h3>
+    <ul>
+        @foreach (var sub in Model.AssignmentSubmissions)
+        {
+            <li>@sub</li>
+        }
+    </ul>
+}
+else if (role == "Admin")
+{
+    <h3>All Courses</h3>
+    <ul>
+        @foreach (var course in Model.AllCourses)
+        {
+            <li>@course</li>
+        }
+    </ul>
+
+    <h3>All Students</h3>
+    <ul>
+        @foreach (var student in Model.AllStudents)
+        {
+            <li>@student</li>
+        }
+    </ul>
+
+    <h3>Add New Course</h3>
+    <form method="post">
+        <input type="text" name="NewCourseTitle" placeholder="Course Title" required />
+        <button type="submit">Add Course</button>
+    </form>
+}

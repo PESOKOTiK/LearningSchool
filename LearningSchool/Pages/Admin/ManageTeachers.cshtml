@@ -1,0 +1,74 @@
+﻿@page
+@model LearningSchool.Pages.Admin.ManageTeachersModel
+@{
+    ViewData["Title"] = "Manage Teachers";
+}
+
+<h2>Manage Teachers</h2>
+<form method="post" class="w-50">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <input type="hidden" name="EditID" value="@Model.EditID" />
+
+    <div class="mb-3">
+        <label>Email</label>
+        <input type="email" asp-for="Email" class="form-control" required />
+    </div>
+    <div class="mb-3">
+        <label>Password</label>
+        @if (Model.EditID.HasValue && Model.EditID.Value > 0)
+        {
+            <!-- Edit mode: no required attribute -->
+            <input type="password" asp-for="Password" class="form-control" />
+            <small class="form-text text-muted">Leave blank to keep existing password</small>
+        }
+        else
+        {
+            <!-- Add mode: required -->
+            <input type="password" asp-for="Password" class="form-control" required />
+        }
+    </div>
+
+    <div class="mb-3">
+        <label>Full Name</label>
+        <input type="text" asp-for="FullName" class="form-control" required />
+    </div>
+    <div class="mb-3">
+        <label>Biography</label>
+        <textarea asp-for="Biography" class="form-control"></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">
+        @(Model.EditID > 0 ? "Update" : "Add") Teacher
+    </button>
+    @if (Model.EditID > 0)
+    {
+        <a href="/Admin/ManageTeachers" class="btn btn-secondary ms-2">Cancel</a>
+    }
+</form>
+
+@if (!string.IsNullOrEmpty(Model.Message))
+{
+    <div class="alert alert-info mt-3">@Model.Message</div>
+}
+
+<hr />
+<h4>Existing Teachers</h4>
+<table class="table table-bordered">
+    <thead>
+        <tr><th>ID</th><th>Email</th><th>Full Name</th><th>Actions</th></tr>
+    </thead>
+    <tbody>
+        @foreach (var t in Model.TeacherList)
+        {
+            <tr>
+                <td>@t.ID</td>
+                <td>@t.Email</td>
+                <td>@t.FullName</td>
+                <td>
+                    <a href="?editId=@t.ID" class="btn btn-sm btn-warning">Edit</a>
+                    <a href="?deleteId=@t.ID" class="btn btn-sm btn-danger"
+                       onclick="return confirm('Delete teacher and user account?')">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

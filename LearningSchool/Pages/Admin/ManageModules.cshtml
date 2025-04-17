@@ -1,0 +1,77 @@
+﻿@page
+@model LearningSchool.Pages.Admin.ManageModulesModel
+@{
+    ViewData["Title"] = "Manage Modules";
+}
+
+<h2>Manage Modules</h2>
+
+<form method="post" class="w-50">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <input type="hidden" asp-for="EditID" />
+
+    <div class="mb-3">
+        <label asp-for="CourseID" class="form-label">Course</label>
+        <select asp-for="CourseID" class="form-select" required>
+            <option value="">-- Select a course --</option>
+            @foreach (var c in Model.CourseOptions)
+            {
+                <option value="@c.ID" selected="@(c.ID == Model.CourseID ? "selected" : "")">
+                    @c.Title
+                </option>
+            }
+        </select>
+        <span asp-validation-for="CourseID" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Title" class="form-label">Title</label>
+        <input asp-for="Title" class="form-control" />
+        <span asp-validation-for="Title" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Description" class="form-label">Description</label>
+        <textarea asp-for="Description" class="form-control"></textarea>
+        <span asp-validation-for="Description" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">
+        @(Model.EditID.HasValue ? "Update" : "Add") Module
+    </button>
+    @if (Model.EditID.HasValue)
+    {
+        <a href="/Admin/ManageModules" class="btn btn-secondary ms-2">Cancel</a>
+    }
+</form>
+
+<hr />
+
+<h4>Existing Modules</h4>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Course</th>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var m in Model.ModuleList)
+        {
+            <tr>
+                <td>@m.ID</td>
+                <td>@m.CourseTitle</td>
+                <td>@m.Title</td>
+                <td>@m.Description</td>
+                <td>
+                    <a href="?editId=@m.ID" class="btn btn-sm btn-warning">Edit</a>
+                    <a href="?deleteId=@m.ID" class="btn btn-sm btn-danger"
+                       onclick="return confirm('Delete module?')">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

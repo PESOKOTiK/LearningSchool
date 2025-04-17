@@ -1,0 +1,69 @@
+﻿@page
+@model LearningSchool.Pages.Admin.ManageCoursesModel
+@{
+    ViewData["Title"] = "Manage Courses";
+}
+<h2>Manage Courses</h2>
+<form method="post" class="w-50">
+    <input type="hidden" name="EditID" value="@Model.EditID" />
+    <div class="mb-3">
+        <label>Title</label>
+        <input type="text" name="Title" class="form-control" value="@Model.FormTitle" required />
+    </div>
+    <div class="mb-3">
+        <label>Level</label>
+        <select name="Level" class="form-select">
+            <option selected>@Model.FormLevel</option>
+            <option>Beginner</option>
+            <option>Intermediate</option>
+            <option>Advanced</option>
+        </select>
+    </div>
+    <div class="mb-3">
+        <label>Language</label>
+        <input type="text" name="Language" class="form-control" value="@Model.FormLanguage" required />
+    </div>
+    <div class="mb-3">
+        <label>Teacher</label>
+        <select name="TeacherID" class="form-select">
+            @foreach (var t in Model.Teachers)
+            {
+                <option value="@t.ID" selected="@(t.ID == Model.FormTeacherID ? "selected" : null)">
+                    @t.FullName
+                </option>
+            }
+        </select>
+    </div>
+    <div class="mb-3">
+        <label>Category</label>
+        <select name="CategoryID" class="form-select">
+            @foreach (var c in Model.Categories)
+            {
+                <option value="@c.ID" selected="@(c.ID == Model.FormCategoryID ? "selected" : null)">
+                    @c.Name
+                </option>
+            }
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary">@(Model.EditID > 0 ? "Update" : "Add") Course</button>
+</form>
+
+<h3 class="mt-4">All Courses</h3>
+<table class="table table-bordered">
+    <thead><tr><th>ID</th><th>Title</th><th>Level</th><th>Teacher</th><th>Actions</th></tr></thead>
+    <tbody>
+        @foreach (var course in Model.Courses)
+        {
+            <tr>
+                <td>@course.ID</td>
+                <td>@course.Title</td>
+                <td>@course.Level</td>
+                <td>@course.TeacherName</td>
+                <td>
+                    <a href="?editId=@course.ID" class="btn btn-sm btn-warning">Edit</a>
+                    <a href="?deleteId=@course.ID" class="btn btn-sm btn-danger">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

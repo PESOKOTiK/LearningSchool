@@ -1,0 +1,48 @@
+﻿@page
+@model LearningSchool.Pages.Admin.AdminDashboardModel
+@{
+    ViewData["Title"] = "Admin Dashboard";
+}
+<h2>Admin Dashboard</h2>
+<div class="row">
+    <div class="col-md-4">
+        <div class="card text-white bg-primary mb-3">
+            <div class="card-body">
+                <h5 class="card-title">Total Courses</h5>
+                <p class="card-text">@Model.TotalCourses</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card text-white bg-success mb-3">
+            <div class="card-body">
+                <h5 class="card-title">Total Students</h5>
+                <p class="card-text">@Model.TotalStudents</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card text-white bg-warning mb-3">
+            <div class="card-body">
+                <h5 class="card-title">Total Teachers</h5>
+                <p class="card-text">@Model.TotalTeachers</p>
+            </div>
+        </div>
+    </div>
+</div>
+<canvas id="courseChart" width="400" height="200"></canvas>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    const ctx = document.getElementById('courseChart').getContext('2d');
+    const courseChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: @Html.Raw(Json.Serialize(Model.CourseTitles)),
+            datasets: [{
+                label: 'Enrollments',
+                data: @Html.Raw(Json.Serialize(Model.CourseEnrollments)),
+                backgroundColor: 'rgba(54, 162, 235, 0.5)'
+            }]
+        }
+    });
+</script>
