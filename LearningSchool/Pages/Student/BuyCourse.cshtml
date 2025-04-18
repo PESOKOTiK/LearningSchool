@@ -1,0 +1,18 @@
+﻿@page
+@model LearningSchool.Pages.Student.BuyCourseModel
+@{
+    ViewData["Title"] = "Pay & Enroll";
+}
+
+<h2>Enroll in @Model.Title</h2>
+
+<form method="post" class="w-50">
+    <input type="hidden" asp-for="CourseID" />
+    <p>Click “Pay” to simulate payment and enroll.</p>
+    <button type="submit" class="btn btn-success">Pay with Card</button>
+</form>
+
+@if (!string.IsNullOrEmpty(Model.Message))
+{
+    <div class="alert alert-info mt-3">@Model.Message</div>
+}

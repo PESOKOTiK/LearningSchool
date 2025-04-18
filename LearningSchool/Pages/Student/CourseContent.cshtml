@@ -1,0 +1,28 @@
+﻿@page
+@model LearningSchool.Pages.Student.CourseContentModel
+@{
+    ViewData["Title"] = "Course Content";
+}
+
+<h2>@Model.Title</h2>
+
+@foreach (var mod in Model.Modules)
+{
+    <div class="mt-4">
+        <h4>@mod.Title</h4>
+        <ul class="list-group">
+            @foreach (var les in mod.Lessons)
+            {
+                <li class="list-group-item">
+                    <strong>@les.Title</strong>
+                    <ul>
+                        @foreach (var a in les.Assignments)
+                        {
+                            <li>@a.Title (Due: @a.DueDate.ToString("g"))</li>
+                        }
+                    </ul>
+                </li>
+            }
+        </ul>
+    </div>
+}

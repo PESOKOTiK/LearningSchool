@@ -1,0 +1,21 @@
+﻿@page
+@model LearningSchool.Pages.Student.ViewAssignmentsModel
+@{
+    ViewData["Title"] = "Assignments";
+}
+
+<h2>Assignments for @Model.LessonTitle</h2>
+
+<table class="table">
+    <thead><tr><th>Title</th><th>Description</th><th>Due</th></tr></thead>
+    <tbody>
+        @foreach (var a in Model.Assignments)
+        {
+            <tr>
+                <td>@a.Title</td>
+                <td>@a.Description</td>
+                <td>@a.DueDate.ToString("g")</td>
+            </tr>
+        }
+    </tbody>
+</table>

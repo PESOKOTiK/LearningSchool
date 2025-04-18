@@ -7,7 +7,7 @@ using System.Collections.Generic;
 namespace LearningSchool.Pages
 {
 
-    public class DashboardModel : PageModel
+    public class HomeModel : PageModel
     {
         public IConfiguration _config;
         public string Role { get; set; }
@@ -26,7 +26,7 @@ namespace LearningSchool.Pages
         [BindProperty]
         public string NewCourseTitle { get; set; }
 
-        public DashboardModel(IConfiguration configuration)
+        public HomeModel(IConfiguration configuration)
         {
             _config = configuration;
         }

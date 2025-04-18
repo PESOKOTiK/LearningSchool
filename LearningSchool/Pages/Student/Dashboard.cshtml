@@ -1,0 +1,37 @@
+﻿@page
+@model LearningSchool.Pages.Student.DashboardModel
+@{
+    ViewData["Title"] = "Student Dashboard";
+}
+
+<h2>Available Courses</h2>
+<table class="table">
+    <thead><tr><th>Course</th><th>Action</th></tr></thead>
+    <tbody>
+        @foreach (var c in Model.Available)
+        {
+            <tr>
+                <td>@c.Title</td>
+                <td>
+                    <a href="/Student/BuyCourse?courseId=@c.ID" class="btn btn-sm btn-success">Pay & Enroll</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<h2 class="mt-4">Your Enrolled Courses</h2>
+<table class="table">
+    <thead><tr><th>Course</th><th>Action</th></tr></thead>
+    <tbody>
+        @foreach (var c in Model.Enrolled)
+        {
+            <tr>
+                <td>@c.Title</td>
+                <td>
+                    <a href="/Student/CourseContent?courseId=@c.ID" class="btn btn-sm btn-primary">View Content</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

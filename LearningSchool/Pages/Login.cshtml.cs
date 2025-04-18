@@ -38,7 +38,7 @@ namespace LearningSchool.Pages
                 HttpContext.Session.SetInt32("UserID", userId);
                 HttpContext.Session.SetString("UserRole", role);
 
-                return RedirectToPage("/Dashboard");
+                return RedirectToPage("/Home");
             }
 
             Message = "Invalid email or password.";

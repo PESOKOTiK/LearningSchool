@@ -1,0 +1,25 @@
+﻿@page
+@model LearningSchool.Pages.Teacher.EnrollStudentModel
+@{
+    ViewData["Title"] = "Enroll Student";
+}
+
+<h2>Enroll Student</h2>
+<form method="post" class="w-50">
+    <input type="hidden" asp-for="CourseID" />
+    <div class="mb-3">
+        <label asp-for="StudentID" class="form-label">Student</label>
+        <select asp-for="StudentID" class="form-select" required>
+            <option value="">-- choose student --</option>
+            @foreach (var s in Model.StudentOptions)
+            {
+                <option value="@s.ID">@s.Name</option>
+            }
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Enroll</button>
+</form>
+@if (!string.IsNullOrEmpty(Model.Message))
+{
+    <div class="alert alert-info mt-3">@Model.Message</div>
+}

@@ -10,7 +10,7 @@
         <a class="navbar-brand" href="/">LearningSchool</a>
         <div class="collapse navbar-collapse">
             <ul class="navbar-nav me-auto">
-                <li class="nav-item"><a class="nav-link" href="/Dashboard">Dashboard</a></li>
+                <li class="nav-item"><a class="nav-link" href="/Home">Home</a></li>
                 @if (Context.Session.GetString("UserRole") == "Admin")
                 {
                     <li class="nav-item"><a class="nav-link" href="/Admin/Dashboard">Admin Panel</a></li>
@@ -18,6 +18,10 @@
                     <li class="nav-item"><a class="nav-link" href="/Admin/ManageModules">Manage Modules</a></li>
                     <li class="nav-item"><a class="nav-link" href="/Admin/ManageLessons">Manage Lessons</a></li>
                     <li class="nav-item"><a class="nav-link" href="/Admin/ManageTeachers">Manage Teachers</a></li>
+                }
+                @if (Context.Session.GetString("UserRole") == "Teacher")
+                {
+                    <li class="nav-item"><a class="nav-link" href="/Teacher/Dashboard">Dashboard</a></li>
                 }
             </ul>
             <ul class="navbar-nav ms-auto">

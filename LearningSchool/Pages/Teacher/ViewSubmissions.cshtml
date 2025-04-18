@@ -1,0 +1,44 @@
+﻿@page
+@model LearningSchool.Pages.Teacher.ViewSubmissionsModel
+@{
+    ViewData["Title"] = "View Submissions";
+}
+
+<h2>View Submissions</h2>
+<form method="get" class="w-50 mb-4">
+    <input type="hidden" name="courseId" value="@Model.CourseID" />
+    <div class="mb-3">
+        <label>Assignment</label>
+        <select name="assignmentId" class="form-select" onchange="this.form.submit()">
+            <option value="">-- choose assignment --</option>
+            @foreach (var a in Model.AssignmentOptions)
+            {
+                <option value="@a.ID" selected="@(a.ID == Model.SelectedAssignmentID ? "selected" : "")">
+                    @a.Title
+                </option>
+            }
+        </select>
+    </div>
+</form>
+
+@if (Model.Submissions.Any())
+{
+    <table class="table table-bordered">
+        <thead><tr><th>Student</th><th>File</th><th>Submitted At</th><th>Grade</th></tr></thead>
+        <tbody>
+            @foreach (var s in Model.Submissions)
+            {
+                <tr>
+                    <td>@s.StudentName</td>
+                    <td><a href="@s.FileURL" target="_blank">Download</a></td>
+                    <td>@s.SubmittedAt</td>
+                    <td>@(s.Grade?.ToString() ?? "-")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else if (Model.SelectedAssignmentID != null)
+{
+    <p>No submissions yet.</p>
+}
