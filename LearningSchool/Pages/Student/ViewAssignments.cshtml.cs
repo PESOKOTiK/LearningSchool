@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using MySql.Data.MySqlClient;
+using System;
+using System.Collections.Generic;
 
 namespace LearningSchool.Pages.Student
 {
@@ -9,36 +11,45 @@ namespace LearningSchool.Pages.Student
         private readonly IConfiguration _config;
         public ViewAssignmentsModel(IConfiguration config) => _config = config;
 
-        [BindProperty(SupportsGet = true)] public int LessonID { get; set; }
+        [BindProperty(SupportsGet = true)]
+        public int LessonID { get; set; }
+
         public string LessonTitle { get; set; }
 
-        public List<(string Title, string Description, DateTime DueDate)> Assignments { get; set; }
+        public List<(int ID, string Title, string Description, DateTime DueDate)> Assignments { get; set; }
             = new();
 
         public void OnGet()
         {
-            using var conn = new MySqlConnection(_config.GetConnectionString("DefaultConnection"));
+            string cs = _config.GetConnectionString("DefaultConnection");
+            using var conn = new MySqlConnection(cs);
             conn.Open();
 
-            // Lesson title
-            using (var cmd = new MySqlCommand("SELECT Title FROM Lessons WHERE ID=@ID", conn))
+            // Load lesson title
+            using (var cmd = new MySqlCommand("SELECT Title FROM Lessons WHERE ID = @ID", conn))
             {
                 cmd.Parameters.AddWithValue("@ID", LessonID);
                 LessonTitle = cmd.ExecuteScalar()?.ToString() ?? "";
             }
 
-            // Assignments
-            var sql = "SELECT Title, Description, DueDate FROM Assignments WHERE LessonID=@L";
-            using var cmd2 = new MySqlCommand(sql, conn);
-            cmd2.Parameters.AddWithValue("@L", LessonID);
-            using var rdr = cmd2.ExecuteReader();
-
-            while (rdr.Read())
-                Assignments.Add((
-                    rdr.GetString(0),
-                    rdr.IsDBNull(1) ? "" : rdr.GetString(1),
-                    rdr.GetDateTime(2)
-                ));
+            // Load assignments
+            using (var cmd = new MySqlCommand(
+                "SELECT ID, Title, Description, DueDate FROM Assignments WHERE LessonID = @L", conn))
+            {
+                cmd.Parameters.AddWithValue("@L", LessonID);
+                using var rdr = cmd.ExecuteReader();
+                while (rdr.Read())
+                {
+                    Assignments.Add((
+                        rdr.GetInt32("ID"),
+                        rdr.GetString("Title"),
+                        rdr.IsDBNull(rdr.GetOrdinal("Description"))
+                            ? ""
+                            : rdr.GetString("Description"),
+                        rdr.GetDateTime("DueDate")
+                    ));
+                }
+            }
         }
     }
 }

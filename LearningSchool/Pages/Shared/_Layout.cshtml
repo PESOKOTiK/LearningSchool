@@ -14,14 +14,22 @@
                 @if (Context.Session.GetString("UserRole") == "Admin")
                 {
                     <li class="nav-item"><a class="nav-link" href="/Admin/Dashboard">Admin Panel</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/Admin/ManageCategories">Manage Categories</a></li>
                     <li class="nav-item"><a class="nav-link" href="/Admin/ManageCourses">Manage Courses</a></li>
                     <li class="nav-item"><a class="nav-link" href="/Admin/ManageModules">Manage Modules</a></li>
                     <li class="nav-item"><a class="nav-link" href="/Admin/ManageLessons">Manage Lessons</a></li>
                     <li class="nav-item"><a class="nav-link" href="/Admin/ManageTeachers">Manage Teachers</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/Admin/ViewFeedback">All Feedback</a></li>
                 }
                 @if (Context.Session.GetString("UserRole") == "Teacher")
                 {
                     <li class="nav-item"><a class="nav-link" href="/Teacher/Dashboard">Dashboard</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/Teacher/ViewFeedback">View Feedback</a></li>
+                }
+                @if (Context.Session.GetString("UserRole") == "Student")
+                {
+                    <li class="nav-item"><a class="nav-link" href="/Student/Dashboard">Dashboard</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/Student/Feedback">Feedback</a></li>
                 }
             </ul>
             <ul class="navbar-nav ms-auto">

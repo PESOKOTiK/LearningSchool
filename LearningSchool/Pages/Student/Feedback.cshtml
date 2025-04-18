@@ -1,0 +1,47 @@
+﻿@page
+@model LearningSchool.Pages.Student.FeedbackModel
+@{
+    ViewData["Title"] = "Leave Course Feedback";
+}
+
+<h2>Leave Feedback</h2>
+
+<form method="post" class="w-50">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="mb-3">
+        <label asp-for="CourseID" class="form-label">Course</label>
+        <select asp-for="CourseID" class="form-select" required>
+            <option value="">-- select a course --</option>
+            @foreach (var c in Model.EnrolledCourses)
+            {
+                <option value="@c.ID">@c.Title</option>
+            }
+        </select>
+        <span asp-validation-for="CourseID" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Rating" class="form-label">Rating</label>
+        <select asp-for="Rating" class="form-select" required>
+            <option value="">-- select rating --</option>
+            @for (int i = 1; i <= 5; i++)
+            {
+                <option value="@i">@i</option>
+            }
+        </select>
+        <span asp-validation-for="Rating" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Comment" class="form-label">Comment</label>
+        <textarea asp-for="Comment" class="form-control"></textarea>
+        <span asp-validation-for="Comment" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Submit Feedback</button>
+</form>
+
+@if (!string.IsNullOrEmpty(Model.Message))
+{
+    <div class="alert alert-info mt-3">@Model.Message</div>
+}

@@ -1,0 +1,35 @@
+﻿@page
+@model LearningSchool.Pages.Teacher.ViewFeedbackModel
+@{
+    ViewData["Title"] = "View Course Feedback";
+}
+
+<h2>Feedback for Your Courses</h2>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Course</th>
+            <th>Student</th>
+            <th>Rating</th>
+            <th>Comment</th>
+            <th>Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var f in Model.Feedbacks)
+        {
+            <tr>
+                <td>@f.CourseTitle</td>
+                <td>@f.StudentName</td>
+                <td>@f.Rating</td>
+                <td>@f.Comment</td>
+                <td>@f.CreatedAt.ToString("g")</td>
+            </tr>
+        }
+        @if (!Model.Feedbacks.Any())
+        {
+            <tr><td colspan="5" class="text-center">No feedback yet.</td></tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,25 @@
+﻿@page
+@model LearningSchool.Pages.Student.SubmitAssignmentModel
+@{
+    ViewData["Title"] = "Submit Assignment";
+}
+
+<h2>Submit Assignment: @Model.AssignmentTitle</h2>
+
+<form method="post" enctype="multipart/form-data" class="w-50">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <input type="hidden" asp-for="AssignmentID" />
+
+    <div class="mb-3">
+        <label asp-for="SubmissionFile" class="form-label">Choose File</label>
+        <input asp-for="SubmissionFile" type="file" class="form-control" required />
+        <span asp-validation-for="SubmissionFile" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-success">Upload</button>
+</form>
+
+@if (!string.IsNullOrEmpty(Model.Message))
+{
+    <div class="alert alert-info mt-3">@Model.Message</div>
+}

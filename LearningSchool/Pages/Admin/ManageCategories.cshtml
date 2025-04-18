@@ -1,0 +1,46 @@
+﻿@page
+@model LearningSchool.Pages.Admin.ManageCategoriesModel
+@{
+    ViewData["Title"] = "Manage Categories";
+}
+
+<h2>Manage Categories</h2>
+
+<form method="post" class="w-50 mb-4">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <input type="hidden" asp-for="EditID" />
+
+    <div class="mb-3">
+        <label asp-for="Name" class="form-label">Name</label>
+        <input asp-for="Name" class="form-control" required />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">
+        @(Model.EditID.HasValue ? "Update" : "Add") Category
+    </button>
+    @if (Model.EditID.HasValue)
+    {
+        <a href="/Admin/ManageCategories" class="btn btn-secondary ms-2">Cancel</a>
+    }
+</form>
+
+<h4>Existing Categories</h4>
+<table class="table table-bordered">
+    <thead><tr><th>ID</th><th>Name</th><th>Actions</th></tr></thead>
+    <tbody>
+        @foreach (var c in Model.Categories)
+        {
+            <tr>
+                <td>@c.ID</td>
+                <td>@c.Name</td>
+                <td>
+                    <a asp-route-editId="@c.ID" class="btn btn-sm btn-warning">Edit</a>
+                    <a asp-route-deleteId="@c.ID"
+                       class="btn btn-sm btn-danger"
+                       onclick="return confirm('Delete category?')">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -6,8 +6,15 @@
 
 <h2>Assignments for @Model.LessonTitle</h2>
 
-<table class="table">
-    <thead><tr><th>Title</th><th>Description</th><th>Due</th></tr></thead>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Due</th>
+            <th>Action</th>
+        </tr>
+    </thead>
     <tbody>
         @foreach (var a in Model.Assignments)
         {
@@ -15,7 +22,19 @@
                 <td>@a.Title</td>
                 <td>@a.Description</td>
                 <td>@a.DueDate.ToString("g")</td>
+                <td>
+                    <a asp-page="/Student/SubmitAssignment"
+                       asp-route-AssignmentID="@a.ID"
+                       class="btn btn-sm btn-primary">
+                        Submit
+                    </a>
+                </td>
             </tr>
         }
     </tbody>
 </table>
+
+@if (!Model.Assignments.Any())
+{
+    <p>No assignments available for this lesson.</p>
+}
